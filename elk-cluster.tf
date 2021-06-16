@@ -8,7 +8,7 @@ resource "aws_elasticsearch_domain" "es" {
 
   cluster_config {
       instance_count = 1
-      instance_type = "t2.medium.elasticsearch"
+      instance_type = "m5.large.elasticsearch"
   }
 
   vpc_options {
