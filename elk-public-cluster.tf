@@ -11,8 +11,27 @@ resource "aws_elasticsearch_domain" "es" {
       instance_type = "m5.large.elasticsearch"
   }
 
-  vpc_options {
-    subnet_ids = aws_subnet.elk[*].id
+  advanced_security_options {
+    enabled = true
+    internal_user_database_enabled = true
+    master_user_options {
+      master_user_name = "USERNAME"
+      master_user_password = "PASSWORD"
+    }
+  }
+  
+  node_to_node_encryption {
+    enabled = true
+  }
+
+  encrypt_at_rest {
+    enabled    = true
+    kms_key_id = "alias/aws/es"
+  }
+
+  domain_endpoint_options {
+    enforce_https = true
+    tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
   }
 
   ebs_options {
